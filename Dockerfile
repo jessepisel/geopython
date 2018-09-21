@@ -25,6 +25,8 @@ RUN apt-get install -y \
 
 	pip --no-cache-dir install \
 	gdal2mbtiles \
+  Cython \
+  cartopy \
   jupyter \
   matplotlib \
   numpy \
@@ -47,6 +49,7 @@ RUN apt-get install -y \
   contextily \
 	beautifulsoup4
 
+
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -64,4 +67,4 @@ CMD ["/run_jupyter.sh", "--allow-root"]
 # Externally accessible data is by default put in /data
 WORKDIR /data
 
-CMD ["/bin/bash"]
+CMD ["./bin/bash"]
