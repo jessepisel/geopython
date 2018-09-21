@@ -10,3 +10,4 @@ c.MultiKernelManager.default_kernel_name = 'python3'
 if 'PASSWORD' in os.environ:
     c.NotebookApp.password = passwd(os.environ['PASSWORD'])
     del os.environ['PASSWORD']
+#hopefully this works
