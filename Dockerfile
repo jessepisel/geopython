@@ -1,68 +1,14 @@
-FROM ubuntu:16.04
+FROM jupyter/scipy-notebook:latest
 
-#need to install software properties on this version of ubuntu to run add-apt-repository
-RUN apt-get update && apt-get install -y software-properties-common python-software-properties
-RUN add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable
-RUN apt-get install -y \
-  curl \
-	python3 \
-	python3-dev \
-	gdal-bin \
-	libgdal-dev \
-	python3-gdal \
-	rasterio \
-	fiona \
-	libspatialindex-c4v5 \
-	python3-tk \
-	&& \
+# Install jupyterlab
+RUN conda install -c conda-forge jupyterlab
+RUN jupyter serverextension enable --py jupyterlab --sys-prefix
 
-	curl -O https://bootstrap.pypa.io/get-pip.py && \
-	python3 get-pip.py && \
-	rm get-pip.py \
-	&& \
+# install a package into the default (python 3.x) environment
+RUN conda install geopandas Cython matplotlib numpy scipy sklearn pandas Pillow descartes Fiona osmnx pykml pyshp rasterio shapely pysal geojsonio scrapy geopy contextily
 
-	pip --no-cache-dir install \
-	gdal2mbtiles \
-  Cython \
-  cartopy \
-  jupyter \
-  matplotlib \
-  numpy \
-  scipy \
-  sklearn \
-  pandas \
-  Pillow \
-	descartes \
-	Fiona \
-	geopandas \
-	osmnx \
-	pykml \
-	pyshp \
-	rasterio \
-	shapely \
-	pysal \
-	geojsonio \
-	scrapy \
-	geopy \
-  contextily \
-	beautifulsoup4
+USER jovyan
 
-
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-COPY jupyter_notebook_config.py /root/.jupyter/
-COPY run_jupyter.sh /
-
-ENV LC_ALL=C.UTF-8
-ENV LANG=C.UTF-8
-
-# jupyter
-EXPOSE 8888
-
-CMD ["/run_jupyter.sh", "--allow-root"]
-
-# Externally accessible data is by default put in /data
-WORKDIR /data
-
-CMD ["./bin/bash"]
+# Add in our custom theming
+ADD custom/ $HOME/.jupyter/custom/
+ADD custom/logo.png /opt/conda/lib/python3.5/site-packages/notebook/static/base/images/logo.png
