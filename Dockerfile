@@ -13,9 +13,7 @@ RUN apt-get install -y \
 	rasterio \
 	fiona \
 	libspatialindex-c4v5 \
-	# libspatialindex-c4v5 fixes error when importing geopandas
 	python3-tk \
-	#python3-tk osmnx dependency
 	&& \
 
 	curl -O https://bootstrap.pypa.io/get-pip.py && \
