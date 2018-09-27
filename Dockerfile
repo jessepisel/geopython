@@ -9,7 +9,6 @@ RUN conda install \
   contextily \
   geopandas \
   cartopy \
-  rasterio 
-RUN pip install \
-  fiona
+  rasterio
+
 USER jovyan
