@@ -4,6 +4,10 @@ FROM jupyter/scipy-notebook:latest
 RUN conda install -c conda-forge jupyterlab
 RUN jupyter serverextension enable --py jupyterlab --sys-prefix
 
+USER root
+
+RUN conda update -n base conda
+
 # install the packages into the default (python 3.x) environment
 RUN conda install \
   contextily \
