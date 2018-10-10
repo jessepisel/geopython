@@ -1,0 +1,9 @@
+version:                "3"
+services:
+  geospatial-notebook:
+      image:            jessepisel/geopython
+      volumes:
+        - J:/Geology/WSGS/Projects/Critical Minerals/:/home/jovyan/work
+      ports:
+        - 8888:8888
+      container_name:   geopython-notebook-container
